@@ -9,7 +9,7 @@ const user1 = {
   jobs: [
     {
       title: "teacher",
-      type: "fullname"
+      type: "fullName"
     },
     {
       title: "dev",

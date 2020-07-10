@@ -50,7 +50,11 @@ const getStrip = (req, res, next) => {
         //   _.omit(trip._doc, ["seats"]),
         //   {avaiableSeatNumber: trip.seats.filter(seat => !seat.isBooked).length}
         // )
-
+        console.log(
+          _.chain(trip)
+          .get("_doc")
+          .omit(["seats"])
+        )
         return _.chain(trip)
           .get("_doc")
           .omit(["seats"])

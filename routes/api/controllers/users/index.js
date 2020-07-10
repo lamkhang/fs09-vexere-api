@@ -6,8 +6,12 @@ const { validatePostUser } = require("./../../../../middlewares/validation/users
 const router = express.Router();
 
 
-router.post("/", validatePostUser, userController.createUser);
+router.post("/create", validatePostUser, userController.createUser);
 router.post("/login", userController.login);
 router.patch("/upload-avatar", authenticate, uploadImage(), userController.uploadAvatar);
+router.delete("/:id", authenticate, userController.deleteUser);
+router.get("", authenticate, userController.getUsers);
+router.get("/:type", authenticate, userController.getUsersByType);
+router.put("/:id", authenticate, userController.updateUser);
 
 module.exports = router;

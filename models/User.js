@@ -4,9 +4,13 @@ const bcrypt = require("bcrypt");
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
-  fullname: { type: String, required: true },
+  fullName: { type: String, required: true },
   userType: { type: String, default: "client" },
-  avatar: {type: String }
+  avatar: {type: String },
+  tickets: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Ticket"
+  }]
 });
 
 UserSchema.pre("save", function beforeSave(next) {

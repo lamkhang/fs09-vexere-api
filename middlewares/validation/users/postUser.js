@@ -9,7 +9,6 @@ module.exports.validatePostUser = async(req, res, next) => {
   const password2 = _.get(req, "body.password2", "");
   const fullName = _.get(req, "body.fullName", "");
   const userType = _.get(req, "body.userType", "");
-
   // validate email (email empty, email valid. email exist);
   if (validator.isEmpty(email)) {
     error.email = "Email is require"
@@ -39,6 +38,7 @@ module.exports.validatePostUser = async(req, res, next) => {
   }
 
   // validate fullname (fullname empty);
+  console.log(validator.isEmpty(fullName))
   if (validator.isEmpty(fullName)) {
     error.fullName = "fullname is require";
   }

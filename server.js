@@ -13,12 +13,12 @@ dotenv.config();
 // }
 
 
-// mongoose.connect("mongodb://localhost:27017/fs09-vexere", { useNewUrlParser: true, useUnifiedTopology: true })
-// .then(() => console.log("connect to mongodb successfully"))
-// .catch(console.log)
-mongoose.connect(config.mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb://localhost:27017/fs09-vexere", { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => console.log("connect to mongodb successfully"))
 .catch(console.log)
+// mongoose.connect(config.mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+// .then(() => console.log("connect to mongodb successfully"))
+// .catch(console.log)
 const app = express();
 // const PORT = 5000
 app.use(express.json());
