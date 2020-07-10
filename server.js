@@ -13,7 +13,7 @@ dotenv.config();
 // }
 
 
-mongoose.connect("mongodb://localhost:27017/fs09-vexere", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.STAGING_MONGO_URi, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => console.log("connect to mongodb successfully"))
 .catch(console.log)
 // mongoose.connect(config.mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
