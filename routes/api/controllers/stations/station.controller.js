@@ -71,7 +71,7 @@ const patchStationId = (req, res, next) => {
       return station.save();
     })
     .then(station => res.status(200).json(station))
-    .catch(res.json)
+    .catch(err=> res.json(err))
 };
 
 const deleteStationId = (req, res, next) => {
@@ -86,7 +86,7 @@ const deleteStationId = (req, res, next) => {
       return Promise.all([Station.deleteOne({_id: id}), station]) 
     })
     .then(result => res.status(200).json(result[1]))
-    .catch(res.json)
+    .catch(err => res.json(err))
 }
 
 module.exports = {

@@ -28,7 +28,7 @@ const codeArr = [
   "B12",
 ];
 
-const getStrip = (req, res, next) => {
+const getTrip = (req, res, next) => {
   // hien thi them so luong get avaiable
   Trip.find()
     // .select("-seats")
@@ -69,7 +69,7 @@ const getStrip = (req, res, next) => {
     .catch(console.log());
 };
 
-const getStripById = (req, res, next) => {
+const getTripById = (req, res, next) => {
   const { id } = req.params;
   Trip.findById(id)
     .then((trips) => {
@@ -83,7 +83,7 @@ const getStripById = (req, res, next) => {
     .catch(console.log());
 };
 
-const postStrip = (req, res, next) => {
+const postTrip = (req, res, next) => {
   const { fromStationId, toStationId, startTime, price } = req.body;
   const seats = codeArr.map((code) => {
     return new Seat({ code });
@@ -134,9 +134,9 @@ const deleteTripById = (req, res, next) => {
 };
 
 module.exports = {
-  getStrip,
-  getStripById,
-  postStrip,
+  getTrip,
+  getTripById,
+  postTrip,
   patchTripById,
   deleteTripById,
 };

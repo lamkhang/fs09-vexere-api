@@ -20,6 +20,15 @@ mongoose.connect(process.env.STAGING_MONGO_URi, { useNewUrlParser: true, useUnif
 // .then(() => console.log("connect to mongodb successfully"))
 // .catch(console.log)
 const app = express();
+
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, token");
+  res.header("Access-Control-Allow-METHOS", "GET", "POST", "PUT", "DELETE")
+  next();
+});
+
 // const PORT = 5000
 app.use(express.json());
 app.use("/uploads", express.static("./uploads"));
