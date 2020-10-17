@@ -10,7 +10,7 @@ const getStations = (req, res, next) => {
 };
 
 const postStations = (req, res, next) => {
-  const { name, address, province } = req.body;
+  const { name, address, province, image } = req.body;
   const newStation = new Station(req.body);
   newStation
     .save()
@@ -37,7 +37,7 @@ const putStationById = (req, res, next) => {
         });
       const { name, address, province } = req.body;
       // station.doc = { ...station.doc, ...req.body };
-      const keys = ["name", "address", "province"];
+      const keys = ["name", "address", "province", "image"];
       keys.forEach(key => {
         station[key] = req.body[key];
       });
