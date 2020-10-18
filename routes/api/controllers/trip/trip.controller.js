@@ -1,5 +1,6 @@
 const { Trip } = require("./../../../../models/Trip");
 const { Seat } = require("../../../../models/Seat");
+const { Station } = require("../../../../models/Station");
 const _ = require("lodash");
 const codeArr = [
   "A01",
@@ -72,25 +73,49 @@ const getTrip = (req, res, next) => {
 const getTripById = (req, res, next) => {
   const { id } = req.params;
   Trip.findById(id)
-    .then((trips) => {
+    .then((trip) => {
       if (!trip)
         return Promise.reject({
           status: 404,
           message: "Trip not found",
         });
-      res.status(200).json(trips);
+      res.status(200).json(trip);
     })
     .catch(console.log());
 };
 
 const postTrip = (req, res, next) => {
   const { fromStationId, toStationId, startTime, price } = req.body;
+  const fromStation = 
+    Station.findById(fromStationId)
+      .then((station) => {
+        if (!station)
+          return Promise.reject({
+            status: 404,
+            message: "Station from not found",
+          });
+        res.status(200).json(station);
+      })
+  .catch(console.log());
+  const toStation = 
+    Station.findById(toStationId)
+      .then((station) => {
+        if (!station)
+          return Promise.reject({
+            status: 404,
+            message: "Station to not found",
+          });
+        res.status(200).json(station);
+      })
+  .catch(console.log());
   const seats = codeArr.map((code) => {
     return new Seat({ code });
   });
   const newTrip = new Trip({
     fromStationId,
     toStationId,
+    fromStation,
+    toStation,
     startTime,
     price,
     seats,

@@ -7,6 +7,20 @@ const {
   sendBookTicketEmail,
 } = require("./../../../../services/email/bookTicket");
 const { result } = require("lodash");
+
+const getTicketById = (req, res, next) => {
+  const { id } = req.params;
+  Ticket.findById(id)
+    .then((ticket) => {
+      if (!ticket)
+        return Promise.reject({
+          status: 404,
+          message: "Ticket not found",
+        });
+      res.status(200).json(ticket);
+    })
+    .catch(console.log());
+};
 // book ticket
 const createTicket = (req, res, next) => {
   const { tripId, seatCodes } = req.body;
@@ -133,5 +147,6 @@ const deleteTicket = (req, res, next) => {
 };
 module.exports = {
   createTicket,
+  getTicketById,
   deleteTicket,
 };

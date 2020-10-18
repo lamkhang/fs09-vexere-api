@@ -7,10 +7,12 @@ const TripSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId, 
     ref: "Station" 
   },
+  fromStation: { type: String, required: true },
   toStationId: { 
     type: mongoose.Schema.Types.ObjectId, 
     ref: "Station" 
   },
+  toStation: { type: String, required: true },
   startTime: { type: Date, required: true },
   seats: [SeatSchema],
   price: { type: Number, default: 0}
