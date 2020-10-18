@@ -31,7 +31,7 @@ const codeArr = [
 
 const getTrip = (req, res, next) => {
   // hien thi them so luong get avaiable
-  Trip.find()
+  Trip.find().populate("fromStationId").populate("toStationId")
     // .select("-seats")
     .then((trips) => {
       const _trips = trips.map((trip) => {
@@ -56,14 +56,16 @@ const getTrip = (req, res, next) => {
         //   .get("_doc")
         //   .omit(["seats"])
         // )
-        return _.chain(trip)
-          .get("_doc")
-          // .omit(["seats"])
-          .assign({
-            avaiableSeatNumber: trip.seats.filter((seat) => !seat.isBooked)
-              .length,
-          })
-          .value();
+        return (
+          _.chain(trip)
+            .get("_doc")
+            // .omit(["seats"])
+            .assign({
+              avaiableSeatNumber: trip.seats.filter((seat) => !seat.isBooked)
+                .length,
+            })
+            .value()
+        );
       });
       res.status(200).json(_trips);
     })
@@ -71,25 +73,25 @@ const getTrip = (req, res, next) => {
 };
 
 const getTripById = (req, res, next) => {
-  const id = req.params;
+  const { id } = req.params;
   // hien thi them so luong get avaiable
-  Trip.findById(id)
+  Trip.findById(id).populate("fromStationId").populate("toStationId")
     // .select("-seats")
     .then((trip) => {
-      if(!trip) {
+      if (!trip) {
         return Promise.reject({
           status: 404,
           message: "Trip not found",
         });
       }
-      const _trip =  _.chain(trip)
-          .get("_doc")
-          // .omit(["seats"])
-          .assign({
-            avaiableSeatNumber: trip.seats.filter((seat) => !seat.isBooked)
-              .length,
-          })
-          .value();
+      const _trip = _.chain(trip)
+        .get("_doc")
+        // .omit(["seats"])
+        .assign({
+          avaiableSeatNumber: trip.seats.filter((seat) => !seat.isBooked)
+            .length,
+        })
+        .value();
       res.status(200).json(_trip);
     })
     .catch(console.log());
@@ -97,36 +99,12 @@ const getTripById = (req, res, next) => {
 
 const postTrip = (req, res, next) => {
   const { fromStationId, toStationId, startTime, price } = req.body;
-  const fromStation = 
-    Station.findById(fromStationId)
-      .then((station) => {
-        if (!station)
-          return Promise.reject({
-            status: 404,
-            message: "Station from not found",
-          });
-        res.status(200).json(station);
-      })
-  .catch(console.log());
-  const toStation = 
-    Station.findById(toStationId)
-      .then((station) => {
-        if (!station)
-          return Promise.reject({
-            status: 404,
-            message: "Station to not found",
-          });
-        res.status(200).json(station);
-      })
-  .catch(console.log());
   const seats = codeArr.map((code) => {
     return new Seat({ code });
   });
   const newTrip = new Trip({
     fromStationId,
     toStationId,
-    fromStation,
-    toStation,
     startTime,
     price,
     seats,

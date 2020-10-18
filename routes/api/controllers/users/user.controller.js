@@ -39,6 +39,12 @@ const getUsers = (req, res, next) => {
   .then(user => res.status(200).json(user))
   .catch((err) => res.json(err));
 }
+const getUserById = (req, res, next) => {
+  const { id } = req.params;
+  User.findById(id)
+  .then(user => res.status(200).json(user))
+  .catch((err) => res.json(err));
+}
 // get user
 const getUsersByType = (req, res, next) => {
   const {type}  = req.params
@@ -132,6 +138,7 @@ module.exports = {
   uploadAvatar,
   deleteUser,
   getUsers,
+  getUserById,
   getUsersByType,
   updateUser
 }

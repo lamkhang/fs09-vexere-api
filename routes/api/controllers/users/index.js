@@ -11,6 +11,7 @@ router.post("/login", userController.login);
 router.patch("/upload-avatar", authenticate, uploadImage(), userController.uploadAvatar);
 router.delete("/:id", authenticate, userController.deleteUser);
 router.get("", authenticate, userController.getUsers);
+router.get("/:id", authenticate, userController.getUserById);
 router.get("/:type", authenticate, userController.getUsersByType);
 router.put("/:id", authenticate, userController.updateUser);
 

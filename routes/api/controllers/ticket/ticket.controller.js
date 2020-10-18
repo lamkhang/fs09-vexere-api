@@ -17,6 +17,26 @@ const getTicketById = (req, res, next) => {
           status: 404,
           message: "Ticket not found",
         });
+      return Promise.all([User.findById(ticket.userId), Trip.findById(ticket.tripId).populate("fromStationId").populate("toStationId"), ticket])
+      
+    })
+    .then(result => {
+      let user = result[0];
+      let trip = result[1];
+      let ticket = result[2];
+      if(!user) {
+        return Promise.reject({
+          status: 404,
+          message: "User not found",
+        });
+      } 
+      if(!trip) {
+        return Promise.reject({
+          status: 404,
+          message: "Trip not found",
+        });
+      } 
+      ticket = { ...ticket._doc, userName: user.fullName, fromStation: trip.fromStationId.name, toStation: trip.toStationId.name };
       res.status(200).json(ticket);
     })
     .catch(console.log());
@@ -29,7 +49,7 @@ const createTicket = (req, res, next) => {
   User.findById(userId)
     .then((user) =>
       Promise.all([
-        Trip.findById(tripId).populate("fromStation").populate("toStation"),
+        Trip.findById(tripId).populate("fromStationId").populate("toStationId"),
         user,
       ])
     )
@@ -72,9 +92,8 @@ const createTicket = (req, res, next) => {
       return Promise.all([newTicket.save(), trip.save(), user.save()]);
     })
     .then(([ticket, trip, user]) => {
-      console.log(ticket);
       res.status(200).json(ticket);
-      // sendBookTicketEmail(req.user, trip, ticket);
+      sendBookTicketEmail(req.user, trip, ticket);
     })
     .catch((err) => {
       if (err.status)
