@@ -71,6 +71,31 @@ const getTrip = (req, res, next) => {
 };
 
 const getTripById = (req, res, next) => {
+  const id = req.params;
+  // hien thi them so luong get avaiable
+  Trip.findById(id)
+    // .select("-seats")
+    .then((trip) => {
+      if(!trip) {
+        return Promise.reject({
+          status: 404,
+          message: "Trip not found",
+        });
+      }
+      const _trip =  _.chain(trip)
+          .get("_doc")
+          // .omit(["seats"])
+          .assign({
+            avaiableSeatNumber: trip.seats.filter((seat) => !seat.isBooked)
+              .length,
+          })
+          .value();
+      res.status(200).json(_trip);
+    })
+    .catch(console.log());
+};
+
+const getTripById = (req, res, next) => {
   const { id } = req.params;
   Trip.findById(id)
     .then((trip) => {
