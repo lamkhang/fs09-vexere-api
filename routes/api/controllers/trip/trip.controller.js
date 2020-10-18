@@ -95,20 +95,6 @@ const getTripById = (req, res, next) => {
     .catch(console.log());
 };
 
-const getTripById = (req, res, next) => {
-  const { id } = req.params;
-  Trip.findById(id)
-    .then((trip) => {
-      if (!trip)
-        return Promise.reject({
-          status: 404,
-          message: "Trip not found",
-        });
-      res.status(200).json(trip);
-    })
-    .catch(console.log());
-};
-
 const postTrip = (req, res, next) => {
   const { fromStationId, toStationId, startTime, price } = req.body;
   const fromStation = 
