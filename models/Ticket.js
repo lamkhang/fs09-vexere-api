@@ -11,8 +11,12 @@ const TicketSchema = new mongoose.Schema({
     ref: "User" 
   },
   seats: [SeatSchema],
-  totalPrice: Number
+  totalPrice: Number,
+  nameUserGo: { type: String, required: true },
+  emailUserGo: { type: String, required: true },
+  phoneUserGo: { type: String, required: true },
+  noteUserGo: { type: String, default: "" }
 
 });
-const Ticket = mongoose.model("Ticket", TicketSchema);
+const Ticket = mongoose.model("Ticket", TicketSchema, "Ticket");
 module.exports = { TicketSchema, Ticket };

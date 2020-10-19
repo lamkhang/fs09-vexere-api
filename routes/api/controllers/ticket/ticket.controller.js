@@ -43,7 +43,7 @@ const getTicketById = (req, res, next) => {
 };
 // book ticket
 const createTicket = (req, res, next) => {
-  const { tripId, seatCodes } = req.body;
+  const { tripId, seatCodes, nameUserGo, emailUserGo, phoneUserGo, noteUserGo } = req.body;
   // userId lay tu token
   const { _id: userId } = req.user;
   User.findById(userId)
@@ -80,6 +80,7 @@ const createTicket = (req, res, next) => {
         tripId,
         seats: seatCodes.map((code) => new Seat({ code, isBooked: true })),
         totalPrice: seatCodes.length * trip.price,
+        nameUserGo, emailUserGo, phoneUserGo, noteUserGo
       });
 
       seatCodes.forEach((code) => {
