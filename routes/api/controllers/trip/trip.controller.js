@@ -127,7 +127,9 @@ const patchTripById = (req, res, next) => {
       trip[key] = req.body[key];
     });
     return trip.save();
-  });
+  })
+  .then(trip => res.status(200).json(trip))
+  .catch(err => res.json(err));
 };
 
 const deleteTripById = (req, res, next) => {
