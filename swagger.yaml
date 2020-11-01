@@ -1,0 +1,778 @@
+---
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about
+         Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net,
+     #swagger](http://swagger.io/irc/).      For this sample, you can use the api
+     key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Vexere"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "fs09-lamkhang-vexere-api.herokuapp.com"
+
+basePath: "/api"
+tags:
+- name: "Stations"
+  description: "Everything about Stations"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+- name: "Trips"
+  description: "Everything about Stations"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+- name: "Users"
+  description: "Everything about user"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+- name: "UserLogin"
+  description: "User login to system"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+- name: "Tickets"
+  description: "Everything about Tickets"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "https"
+- "http"
+paths:
+  /stations:
+    get:
+      tags:
+      - "Stations"
+      summary: "Get List Station"
+      description: ""
+      operationId: "getListStation"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Get List Station from DB"
+        required: false
+        schema:
+          $ref: ""
+      responses:
+        "200":
+          description: "successful get list Station"
+          schema:
+            type: "array"
+            items:
+              $ref: ""
+        "405":
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "stations"
+    post:
+      tags:
+      - "Stations"
+      summary: "Add a new Station"
+      description: ""
+      operationId: "createStation"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "Content-Type"
+        in: "header"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Add a new Station to DB"
+        required: true
+        schema:
+          $ref: "#/definitions/Station"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Station not found"
+        "405":
+          description: "Validation exception"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "stations"
+  /stations/{stationID}:
+    get:
+      tags:
+      - "Stations"
+      summary: "Find Station by ID"
+      description: "Returns a single Station"
+      operationId: "getStationById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "stationID"
+        in: "path"
+        description: "ID of Station to return"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful get Station by ID"
+          schema:
+            $ref: ""
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Station not found"
+      security:
+      - api_key: []
+      x-swagger-router-controller: "stations"
+    put:
+      tags:
+      - "Stations"
+      summary: "Updates Station"
+      description: ""
+      operationId: "updateStation"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "stationID"
+        in: "path"
+        description: "ID of Station to return"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Update Station to DB"
+        required: true
+        schema:
+          $ref: "#/definitions/Station"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "stations"
+    delete:
+      tags:
+      - "Stations"
+      summary: "Deletes a Station"
+      description: ""
+      operationId: "deleteStation"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "stationID"
+        in: "path"
+        description: "Station id to delete"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Station not found"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "stations"
+  /trips:
+    get:
+      tags:
+      - "Trips"
+      summary: "Get List Trips"
+      description: ""
+      operationId: "getListTrip"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Get List Trip from DB"
+        required: false
+        schema:
+          $ref: ""
+      responses:
+        "200":
+          description: "successful get list Trip"
+          schema:
+            type: "array"
+            items:
+              $ref: ""
+        "405":
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "trips"
+    post:
+      tags:
+      - "Trips"
+      summary: "Add a new Trip"
+      description: ""
+      operationId: "createTrip"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Add a new Trip to DB"
+        required: true
+        schema:
+          $ref: "#/definitions/Trip"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Trip not found"
+        "405":
+          description: "Validation exception"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "trips"
+  /trips/{tripID}:
+    get:
+      tags:
+      - "Trips"
+      summary: "Find Trip by ID"
+      description: "Returns a single Trip"
+      operationId: "getTripById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "tripID"
+        in: "path"
+        description: "ID of Trip to return"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful get Trip by ID"
+          schema:
+            $ref: ""
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Trip not found"
+      security:
+      - api_key: []
+      x-swagger-router-controller: "trips"
+    patch:
+      tags:
+      - "Trips"
+      summary: "Updates Trip"
+      description: ""
+      operationId: "updateTrip"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "tripID"
+        in: "path"
+        description: "ID of Trip to return"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Update Trip to DB"
+        required: true
+        schema:
+          $ref: "#/definitions/Trip"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "trips"
+    delete:
+      tags:
+      - "Trips"
+      summary: "Deletes a Trip"
+      description: ""
+      operationId: "deleteTrip"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "tripID"
+        in: "path"
+        description: "Trip id to delete"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Trip not found"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "trips"  
+  /users:
+    get:
+      tags:
+      - "Users"
+      summary: "Get List User"
+      description: ""
+      operationId: "getListUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Get List User from DB"
+        required: false
+        schema:
+          $ref: ""
+      responses:
+        "200":
+          description: "successful get list User"
+          schema:
+            type: "array"
+            items:
+              $ref: ""
+        "405":
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "users"
+    post:
+      tags:
+      - "Users"
+      summary: "Create User"
+      description: "This can only be done by the logged in user."
+      operationId: "createUser"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created User object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "users"
+  /users/{userID}:
+    get:
+      tags:
+      - "Users"
+      summary: "Find User by ID"
+      description: "Returns a single Trip"
+      operationId: "getUserById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "userID"
+        description: "ID of User to return"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful get User by ID"
+          schema:
+            items:
+              $ref: ""
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "users"
+    put:
+      tags:
+      - "Users"
+      summary: "Updates User"
+      description: ""
+      operationId: "updateUser"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "userID"
+        in: "path"
+        description: "ID of User to return"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Update User to DB"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "users"
+    delete:
+      tags:
+      - "Users"
+      summary: "Deletes a User"
+      description: ""
+      operationId: "deleteUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "userID"
+        in: "path"
+        description: "User id to delete"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "User not found"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "users"  
+  /users/login:
+    post:
+      tags:
+      - "UserLogin"
+      summary: "Logs user into the system"
+      description: ""
+      operationId: "loginUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Login User object"
+        required: true
+        schema:
+          $ref: "#/definitions/UserLogin"
+      responses:
+        "200":
+          description: "User login successfully"
+          schema:
+            $ref: ""
+        "400":
+          description: "Invalid username/password supplied"
+      x-swagger-router-controller: "users"
+  /tickets:
+    post:
+      tags:
+      - "Tickets"
+      summary: "Add a new Ticket"
+      description: ""
+      operationId: "bookTicket"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Add a new Ticket to DB"
+        required: true
+        schema:
+          $ref: "#/definitions/Ticket"
+      - name: "token"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Ticket not found"
+        "405":
+          description: "Validation exception"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "tickets"
+  /tickets/{ticketID}:
+    get:
+      tags:
+      - "Tickets"
+      summary: "Find Ticket by ID"
+      description: "Returns a single Trip"
+      operationId: "getTicketById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "ticketID"
+        in: "path"
+        description: "ID of Ticket to return"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful get Ticket"
+          schema:
+            $ref: ""
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Ticket not found"
+      security:
+      - api_key: []
+      x-swagger-router-controller: "tickets"
+    delete:
+      tags:
+      - "Tickets"
+      summary: "Deletes a Ticket"
+      description: ""
+      operationId: "deleteTicket"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "ticketID"
+        in: "path"
+        description: "Ticket id to delete"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Ticket not found"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "tickets"  
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  User:
+    type: "object"
+    required:
+    - "email"
+    - "password"
+    - "password2"
+    - "fullName"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+      password2:
+        type: "string"
+      fullName:
+        type: "string"
+    xml:
+      name: "User"
+    example:
+      email: "email@gmail.com"
+      password: "password"
+      password2: "password2"
+      fullName: "lbk"
+  UserLogin:
+    type: "object"
+    required:
+    - "email"
+    - "password"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+    xml:
+      name: "UserLogin"
+    example:
+      email: "lambaokhang@gmail.com"
+      password: "123456"
+
+  Station:
+    type: "object"
+    required:
+    - "name"
+    - "address"
+    - "province"
+    properties:
+      name:
+        type: "string"
+      address:
+        type: "string"
+      province:
+        type: "string"
+      image:
+        type: "string"
+    xml:
+      name: "Station"
+    example:
+      name: "station"
+      address: "TP.HCM"
+      province: "TP.HCM"
+      image: "image.jpg"
+  Trip:
+    type: "object"
+    required:
+    - "fromStationId"
+    - "toStationId"
+    - "startTime"
+    - "price"
+    properties:
+      fromStationId:
+        type: "string"
+      toStationId:
+        type: "string"
+      startTime:
+        type: "string"
+      price:
+        type: "string"
+    xml:
+      name: "Trip"
+    example:
+      fromStationId: "5f35522973f09c0017c6e34e"
+      toStationId: "5f3551f473f09c0017c6e34c"
+      startTime: "Sun Oct 18 2020 10:50:36 GMT+070"
+      price: 100
+  Ticket:
+    type: "object"
+    required:
+    - "nameUserGo"
+    - "emailUserGo"
+    - "phoneUserGo"
+    - "seats"
+    properties:
+      nameUserGo:
+        type: "string"
+      emailUserGo:
+        type: "string"
+      phoneUserGo:
+        type: "string"
+      seats:
+        type: "array"
+        xml:
+          name: "seats"
+          wrapped: true
+        items:
+          $ref: ""
+    xml:
+      name: "Trip"
+    example:
+      fromStationId: "5f35522973f09c0017c6e34e"
+      toStationId: "5f3551f473f09c0017c6e34c"
+      startTime: "Sun Oct 18 2020 10:50:36 GMT+070"
+      price: 100
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

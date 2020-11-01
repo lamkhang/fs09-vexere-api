@@ -51,13 +51,23 @@ app.use(function (req, res, next) {
 // app.patch("/api/stations/:id", stations.patchStationId)
 // app.delete("/api/stations/:id", stations.deleteStationId)
 
-app.use("/api/stations", require("./routes/api/controllers/stations/index"));
-app.use("/api/trips", require("./routes/api/controllers/trip/index"));
-app.use("/api/users", require("./routes/api/controllers/users/index"));
-app.use("/api/tickets", require("./routes/api/controllers/ticket/index"));
+
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
+const swaggerOptions = {
+  explorer: true
+};
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
+
+// app.use("/api/stations", require("./routes/api/controllers/stations/index"));
+// app.use("/api/trips", require("./routes/api/controllers/trip/index"));
+// app.use("/api/users", require("./routes/api/controllers/users/index"));
+// app.use("/api/tickets", require("./routes/api/controllers/ticket/index"));
 
 const PORT = process.env.PORT || config.port;
-app.listen(PORT, () => {
+// 8000 is a PORT SWAGGER
+app.listen(8000, () => {
   console.log(`app is running on port ${PORT}`);
 });
 
